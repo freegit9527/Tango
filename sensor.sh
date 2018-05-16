@@ -127,7 +127,7 @@ arch=`uname -m`
 if [[ $arch == "x86_64" ]]; then
     INSTALL_FILE="splunkforwarder-6.3.0-aa7d4b1ccb80-Linux-x86_64.tgz"
     print_notification "System is $arch. Downloading: $INSTALL_FILE to /opt.."
-    wget -O /opt/splunkforwarder-6.3.0-aa7d4b1ccb80-Linux-x86_64.tgz 'http://www.splunk.com/bin/splunk/DownloadActivityServlet?architecture=x86_64&platform=linux&version=6.3.0&product=universalforwarder&filename=splunkforwarder-6.3.0-aa7d4b1ccb80-Linux-x86_64.tgz&wget=true' &>> $logfile    
+    wget -O /opt/splunkforwarder-6.3.0-aa7d4b1ccb80-Linux-x86_64.tgz 'https://download.splunk.com/products/universalforwarder/releases/6.3.0/linux/splunkforwarder-6.3.0-aa7d4b1ccb80-Linux-x86_64.tgz' &>> $logfile    
     error_check 'Splunk Forwarder Download'
 elif [[ $arch == "i686" ]]; then
     INSTALL_FILE="splunkforwarder-6.3.0-aa7d4b1ccb80-Linux-i686.tgz"
@@ -162,9 +162,9 @@ elif [ -f /etc/redhat-release ]; then
     yum -y install wget python-devel python-zope-interface unzip git gnutls-devel gcc gcc-c++ &>> $logfile
     error_check 'Yum Package Installation'
     
-    print_notification "Installing required python packages via easy_install.."
-    easy_install pycrypto pyasn1 twisted requests &>> $logfile
-    error_check 'Python easy_install'
+    print_notification "Installing required python packages via pip.."
+    pip2.7  install  pycrypto pyasn1 twisted requests &>> $logfile
+    error_check 'pip2.7'
 else
     print_error "Unable to determine correct package manager to use. This script currently supports apt-based Operating Systems (Debian, Ubuntu, Kali) and yum-based Operating Systems (Redhat, CentOS, etc.) and relies on either /etc/redhat-release or /etc/debian_version being present to determine the correct package manager to use."
     exit 1
